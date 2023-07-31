@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="MainModule" script:language="StarBasic" script:moduleType="normal">REM  *****  BASIC  *****
+REM (C) obooklage 26072023
+REM Original post from  http://forum.ubuntu.org.cn/viewtopic.php?f=35&amp;t=400116
+REM Install &quot;CMU Serif&quot; ttf fonts from https://www.checkmyworking.com/cm-web-fonts/
+
+Global DEFAULT_FONT_FAMILY as String
+Global FONT_FAMILY as String
+
+Global DEFAULT_FONT_SIZE as Integer
+Global FONT_SIZE as Integer
+
+Global PGM_INIT as Boolean
+
+Sub Main
+
+	DEFAULT_FONT_FAMILY = &quot;CMU Serif&quot;        REM Windows ET Linux (2023)
+	DEFAULT_FONT_SIZE = 12
+
+	iF PGM_INIT &lt;&gt; True Then
+		FONT_FAMILY = DEFAULT_FONT_FAMILY
+		FONT_SIZE = DEFAULT_FONT_SIZE
+		PGM_INIT = True
+	End If
+
+	ShowSyncDialog
+
+End Sub
+
+REM ######################################## DialBox
+
+Global oSyncDialog As Object
+Global oSyncDialogValided As Boolean
+
+private Sub ButtonFillDefault()
+    oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = DEFAULT_FONT_FAMILY
+    oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = DEFAULT_FONT_SIZE
+End Sub
+
+private Function LoadDialog(Libname as String, DialogName as String, Optional oLibContainer)
+Dim oLib as Object &apos; com.sun.star.script.XLibraryContainer
+Dim oLibDialog as Object
+Dim oRuntimeDialog as Object
+    If IsMissing(oLibContainer) Then
+        oLibContainer = DialogLibraries
+    End If
+    oLibContainer.LoadLibrary(LibName)
+    oLib = oLibContainer.GetByName(Libname)
+    oLibDialog = oLib.GetByName(DialogName)
+    oRuntimeDialog = CreateUnoDialog(oLibDialog)
+    LoadDialog() = oRuntimeDialog
+End Function
+
+private Sub ButtonSyncDialog
+	FONT_FAMILY = oSyncDialog.GetControl(&quot;IdFontName&quot;).Text
+	FONT_SIZE = oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text
+	oSyncDialog.endexecute
+	Synchronize(FONT_FAMILY, FONT_SIZE)
+End Sub
+
+private Sub ShowSyncDialog
+    oSyncDialog = LoadDialog(&quot;FormulaSync&quot;, &quot;MainDialog&quot;)
+    oSyncDialog.Title = &quot;FormulaSync&quot;
+    oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = FONT_FAMILY
+    oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = FONT_SIZE
+    oSyncDialogValided = False
+    oSyncDialog.Execute()
+End Sub
+
+REM ######################################## Synchronize all formulas
+
+Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String)
+	REM MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
+
+	REM Size of Exposants/indices and Limts
+	EXPOSANT_INDICE_SIZE_PERCENT = 65
+	LIMIT_SIZE_PERCENT = 65
+
+	REM ********************************************************************
+
+	FONT_CUSTOM_SERIF = &quot;Cmathscr&quot;
+	FONT_CUSTOM_SERIFSANS = &quot;Cmathcal&quot;
+	FONT_CUSTOM_FIXED = &quot;Courier New&quot;
+
+	REM ********************************************************************
+
+	FONT_VARIABLES = FONT_FAMILY
+	FONT_VARIABLES_ITALIC = True
+	FONT_VARIABLES_BOLD = False
+
+	FONT_FUNCTIONS = FONT_FAMILY
+	FONT_FUNCTIONS_ITALIC = False
+	FONT_FUNCTIONS_BOLD = False
+
+	FONT_NUMBERS = FONT_FAMILY
+	FONT_NUMBERS_ITALIC = False
+	FONT_NUMBERS_BOLD = False
+
+	FONT_TEXT = FONT_FAMILY
+	FONT_TEXT_ITALIC = False
+	FONT_TEXT_BOLD = False
+
+	FONT_CUSTOM_ITALIC = False
+	FONT_CUSTOM_BOLD = False
+
+
+	oCurrentController = ThisComponent.getCurrentController()
+	oTextDocument = oCurrentController.Model
+	oEmbeddedObjects = oTextDocument.EmbeddedObjects
+	nEndIndex = oEmbeddedObjects.Count - 1
+
+	for nIndex = 0 to nEndIndex
+	oMathObject = oEmbeddedObjects.getByIndex(nIndex)
+		oModel = oMathObject.Model
+		if (not isNull(oModel)) then
+			if (not isEmpty(oModel)) then
+				if oModel.supportsService(&quot;com.sun.star.formula.FormulaProperties&quot;) then
+					&apos; or if oMathObject.CLSID = &quot;078B7ABA-54FC-8551-6147e776a997&quot; then
+				
+					oModel.BaseFontHeight = FONT_SIZE
+				
+					s=oModel.Formula
+					b=CHR$(34)
+					c=&quot;italic&quot;
+					d=&quot;ital&quot;
+				
+					s = Replace(s,b,&quot;[CHAR34]&quot;)
+					s = Replace(s,c,&quot;&quot;)
+					s = Replace(s,d,&quot;&quot;)
+				
+					REM s = Chr(34) +  Chr(34) + s
+				
+					s = Replace(s,&quot;[CHAR34]&quot;,&quot;&quot;+Chr(34))
+				
+					oModel.Formula=s
+				
+					&apos; Variables
+					oModel.FontNameVariables = FONT_VARIABLES
+					oModel.FontVariablesIsItalic = FONT_VARIABLES_ITALIC
+					oModel.FontVariablesIsBold = FONT_VARIABLES_BOLD
+				
+					&apos; Functions
+					oModel.FontNameFunctions = FONT_FUNCTIONS
+					oModel.FontFunctionsIsItalic = FONT_FUNCTIONS_ITALIC
+					oModel.FontFunctionsIsBold = FONT_FUNCTIONS_BOLD
+				
+					&apos; Numbers
+					oModel.FontNameNumbers = FONT_NUMBERS
+					oModel.FontNumbersIsItalic = FONT_NUMBERS_ITALIC
+					oModel.FontNumbersIsBold = FONT_NUMBERS_BOLD
+				
+					&apos; Text
+					oModel.FontNameText = FONT_TEXT
+					oModel.FontTextIsItalic =  FONT_TEXT_ITALIC
+					oModel.FontTextIsBold = FONT_TEXT_BOLD
+				
+					&apos;CustomFontNameSerif
+					oModel.CustomFontNameSerif = FONT_CUSTOM_SERIF
+				
+					&apos;CustomFontNameSans
+					oModel.CustomFontNameSans = FONT_CUSTOM_SERIFSANS
+				
+					&apos;CustomFontNameFixed
+					oModel.CustomFontNameFixed = FONT_CUSTOM_FIXED
+					oModel.FontFixedIsItalic =  FONT_CUSTOM_ITALIC
+					oModel.FontFixedIsBold = FONT_CUSTOM_BOLD
+				
+					rem oModel.RelativeIndexSubscript=52
+					rem oModel.RelativeIndexSuperscript=10
+					oModel.RelativeFontHeightIndices=EXPOSANT_INDICE_SIZE_PERCENT
+					oModel.RelativeFontHeightLimits=LIMIT_SIZE_PERCENT
+				
+					&apos; Update
+					oXCOEO = oMathObject.ExtendedControlOverEmbeddedObject
+				
+					oXCOEO.update()
+				end if &apos; if formula
+			end if &apos; if not empty
+		end if &apos; if not null
+	next nIndex
+	
+	ThisComponent.reformat()
+	
+End Function
+
+REM from https://wiki.openoffice.org/wiki/Documentation/BASIC_Guide/Strings_%28Runtime_Library%29
+
+Function Replace(Source As String, Search As String, NewPart As String)
+  Dim Result As String
+  Dim StartPos As Long
+  Dim CurrentPos As Long
+
+  Result = &quot;&quot; rem Chr$(34)
+  StartPos = 1
+  CurrentPos = 1
+
+  If Search = &quot;&quot; Then
+    Result = Source
+  Else
+    Do While CurrentPos &lt;&gt; 0
+      CurrentPos = InStr(StartPos, Source, Search)
+      If CurrentPos &lt;&gt; 0 Then
+        Result = Result + Mid(Source, StartPos, _
+        CurrentPos - StartPos)
+        Result = Result + NewPart
+        StartPos = CurrentPos + Len(Search)
+      Else
+        Result = Result + Mid(Source, StartPos, Len(Source))
+      End If                &apos; Position &lt;&gt; 0
+    Loop
+  End If
+
+  Replace = Result
+End Function
+
+</script:module>
