@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="MainDialog" dlg:left="208" dlg:top="103" dlg:width="174" dlg:height="122" dlg:closeable="true" dlg:moveable="true">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:background-color="0x666666" dlg:border="simple"/>
+ </dlg:styles>
  <dlg:bulletinboard>
   <dlg:text dlg:id="Label1" dlg:tab-index="0" dlg:left="17" dlg:top="66" dlg:width="35" dlg:height="13" dlg:value="Font Family"/>
-  <dlg:text dlg:id="Label2" dlg:tab-index="5" dlg:left="17" dlg:top="34" dlg:width="34" dlg:height="13" dlg:value="Font Size"/>
-  <dlg:textfield dlg:id="IdFontName" dlg:tab-index="2" dlg:left="64" dlg:top="64" dlg:width="50" dlg:height="10" dlg:value="CMU Serif"/>
-  <dlg:numericfield dlg:id="IdFontSize" dlg:tab-index="1" dlg:left="64" dlg:top="32" dlg:width="50" dlg:height="12" dlg:page="1" dlg:strict-format="true" dlg:decimal-accuracy="0" dlg:value="12" dlg:value-min="6" dlg:value-max="32"/>
-  <dlg:button dlg:id="IdSyncButton" dlg:tab-index="3" dlg:left="59" dlg:top="101" dlg:width="59" dlg:height="12" dlg:default="true" dlg:value="Sync">
+  <dlg:text dlg:id="Label2" dlg:tab-index="5" dlg:left="17" dlg:top="43" dlg:width="34" dlg:height="13" dlg:value="Font Size"/>
+  <dlg:textfield dlg:id="IdFontName" dlg:tab-index="2" dlg:left="64" dlg:top="66" dlg:width="50" dlg:height="10" dlg:value="CMU Serif"/>
+  <dlg:numericfield dlg:id="IdFontSize" dlg:tab-index="1" dlg:left="64" dlg:top="39" dlg:width="50" dlg:height="12" dlg:page="1" dlg:strict-format="true" dlg:decimal-accuracy="0" dlg:value="12" dlg:value-min="6" dlg:value-max="32"/>
+  <dlg:button dlg:id="IdSyncButton" dlg:tab-index="3" dlg:left="61" dlg:top="99" dlg:width="59" dlg:height="12" dlg:default="true" dlg:value="Synchronize" dlg:button-type="ok">
    <script:event script:event-name="on-mouseup" script:macro-name="vnd.sun.star.script:FormulaSync.MainModule.ButtonSyncDialog?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="IdDefaultButton" dlg:tab-index="4" dlg:left="135" dlg:top="47" dlg:width="35" dlg:height="13" dlg:value="Default">
+  <dlg:button dlg:id="IdDefaultButton" dlg:tab-index="4" dlg:left="130" dlg:top="51" dlg:width="35" dlg:height="13" dlg:value="Default">
    <script:event script:event-name="on-mouseup" script:macro-name="vnd.sun.star.script:FormulaSync.MainModule.ButtonFillDefault?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
+  <dlg:textfield dlg:style-id="0" dlg:id="Notice" dlg:tab-index="6" dlg:left="0" dlg:top="4" dlg:width="173" dlg:height="19" dlg:tabstop="false" dlg:align="center" dlg:valign="center" dlg:readonly="true" dlg:value="This extension is experimental, keep a copy of your documents."/>
  </dlg:bulletinboard>
 </dlg:window>
