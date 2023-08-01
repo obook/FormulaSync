@@ -31,12 +31,6 @@ End Sub
 REM ######################################## DialBox
 
 Global oSyncDialog As Object
-Global oSyncDialogValided As Boolean
-
-private Sub ButtonFillDefault()
-    oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = DEFAULT_FONT_FAMILY
-    oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = DEFAULT_FONT_SIZE
-End Sub
 
 private Function LoadDialog(Libname as String, DialogName as String, Optional oLibContainer)
 Dim oLib as Object &apos; com.sun.star.script.XLibraryContainer
@@ -56,7 +50,13 @@ private Sub ButtonSyncDialog
 	FONT_FAMILY = oSyncDialog.GetControl(&quot;IdFontName&quot;).Text
 	FONT_SIZE = oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text
 	oSyncDialog.endexecute
+	REM MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
 	Synchronize(FONT_FAMILY, FONT_SIZE)
+End Sub
+
+private Sub ButtonFillDefault()
+    oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = DEFAULT_FONT_FAMILY
+    oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = DEFAULT_FONT_SIZE
 End Sub
 
 private Sub ShowSyncDialog
@@ -64,7 +64,6 @@ private Sub ShowSyncDialog
     oSyncDialog.Title = &quot;FormulaSync&quot;
     oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = FONT_FAMILY
     oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = FONT_SIZE
-    oSyncDialogValided = False
     oSyncDialog.Execute()
 End Sub
 

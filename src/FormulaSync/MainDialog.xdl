@@ -9,7 +9,7 @@
   <dlg:text dlg:id="Label2" dlg:tab-index="5" dlg:left="17" dlg:top="43" dlg:width="34" dlg:height="13" dlg:value="Font Size"/>
   <dlg:textfield dlg:id="IdFontName" dlg:tab-index="2" dlg:left="64" dlg:top="66" dlg:width="50" dlg:height="10" dlg:value="CMU Serif"/>
   <dlg:numericfield dlg:id="IdFontSize" dlg:tab-index="1" dlg:left="64" dlg:top="39" dlg:width="50" dlg:height="12" dlg:page="1" dlg:strict-format="true" dlg:decimal-accuracy="0" dlg:value="12" dlg:value-min="6" dlg:value-max="32"/>
-  <dlg:button dlg:id="IdSyncButton" dlg:tab-index="3" dlg:left="61" dlg:top="99" dlg:width="59" dlg:height="12" dlg:default="true" dlg:value="Synchronize" dlg:button-type="ok">
+  <dlg:button dlg:id="IdSyncButton" dlg:tab-index="3" dlg:left="61" dlg:top="99" dlg:width="59" dlg:height="12" dlg:default="true" dlg:value="Synchronize">
    <script:event script:event-name="on-mouseup" script:macro-name="vnd.sun.star.script:FormulaSync.MainModule.ButtonSyncDialog?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="IdDefaultButton" dlg:tab-index="4" dlg:left="130" dlg:top="51" dlg:width="35" dlg:height="13" dlg:value="Default">
