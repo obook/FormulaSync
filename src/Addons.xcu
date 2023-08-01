@@ -13,10 +13,10 @@
                      </prop>
                      <node oor:name="UserDefinedImages">
                               <prop oor:name="ImageSmallURL">
-                                    <value>vnd.sun.star.extension://com.obooklage.formulasync/icons/icon_16x16.png</value>
+                                    <value>%origin%/icons/icon.svg</value>
                               </prop>
                               <prop oor:name="ImageBigURL">
-                                    <value>vnd.sun.star.extension://com.obooklage.formulasync/icons/icon_26x26.png</value>
+                                    <value>%origin%/icons/icon.svg</value>
                               </prop>
                      </node>
             </node>
