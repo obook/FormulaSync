@@ -6,9 +6,9 @@
 	<node oor:name="UIElements">
 		<node oor:name="States">
 			<!-- Used to dock the toolbar in the first toolbar row (by default it's floating) -->
-			<node oor:name="private:resource/toolbar/addon_FormulaSync.OfficeToolBar" oor:op="replace">
+			<node oor:name="private:resource/toolbar/FormulaSync.OfficeToolBar" oor:op="replace">
 				<prop oor:name="UIName" oor:type="xs:string">
-				    <value>FormulaSync</value> <!-- Toolbar name -->
+				    <value>Formula Sync</value> <!-- Toolbar name -->
 				</prop>
 				<prop oor:name="DockPos" oor:type="xs:string">
 					<value>10,0</value>
