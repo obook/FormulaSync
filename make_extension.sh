@@ -1,4 +1,5 @@
 #!/bin/sh
-rm -f formulasync.oxt
+EXTENSION="formulasync.oxt"
+rm -f $EXTENSION
 cd src/
-zip -r ../formulasync.oxt *
+zip -r ../$EXTENSION *
