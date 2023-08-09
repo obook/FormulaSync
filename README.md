@@ -7,5 +7,5 @@ Download last release : https://github.com/obook/FormulaSync/raw/main/formulasyn
 <hr>
 
 <p align="center">
-    <img src="./media/screen01.png"  width="400">
+    <img src="./media/screen01.png"  width="600">
 </p>
