@@ -3,7 +3,7 @@
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="MainModule" script:language="StarBasic" script:moduleType="normal">REM  *****  BASIC  *****
 REM (C) obooklage 26072023
 REM Original post from  http://forum.ubuntu.org.cn/viewtopic.php?f=35&amp;t=400116
-REM Install &quot;CMU Serif&quot; ttf fonts from https://www.checkmyworking.com/cm-web-fonts/
+REM Install &quot;CMU Serif&quot; fonts in ttf folder of https://www.checkmyworking.com/cm-web-fonts/
 
 Global DEFAULT_FONT_FAMILY as String
 Global FONT_FAMILY as String
@@ -11,16 +11,26 @@ Global FONT_FAMILY as String
 Global DEFAULT_FONT_SIZE as Integer
 Global FONT_SIZE as Integer
 
+Global DEFAULT_EXPOSANT_PERCENT as Integer
+Global EXPOSANT_PERCENT as Integer
+
+Global DEFAULT_LIMIT_PERCENT as Integer
+Global LIMIT_PERCENT as Integer
+
 Global PGM_INIT as Boolean
 
 Sub Main
 
 	DEFAULT_FONT_FAMILY = &quot;CMU Serif&quot;        REM Windows ET Linux (2023)
 	DEFAULT_FONT_SIZE = 12
+	DEFAULT_EXPOSANT_PERCENT = 65
+	DEFAULT_LIMIT_PERCENT = 65
 
 	iF PGM_INIT &lt;&gt; True Then
 		FONT_FAMILY = DEFAULT_FONT_FAMILY
 		FONT_SIZE = DEFAULT_FONT_SIZE
+		EXPOSANT_PERCENT = DEFAULT_EXPOSANT_PERCENT
+		LIMIT_PERCENT = DEFAULT_LIMIT_PERCENT
 		PGM_INIT = True
 	End If
 
@@ -49,14 +59,18 @@ End Function
 private Sub ButtonSyncDialog
 	FONT_FAMILY = oSyncDialog.GetControl(&quot;IdFontName&quot;).Text
 	FONT_SIZE = oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text
+	EXPOSANT_PERCENT = oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text
+	LIMIT_PERCENT = oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text
 	oSyncDialog.endexecute
 	REM MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
-	Synchronize(FONT_FAMILY, FONT_SIZE)
+	Synchronize(FONT_FAMILY, FONT_SIZE, EXPOSANT_PERCENT, LIMIT_PERCENT)
 End Sub
 
 private Sub ButtonFillDefault()
     oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = DEFAULT_FONT_FAMILY
     oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = DEFAULT_FONT_SIZE
+    oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text = DEFAULT_EXPOSANT_PERCENT
+    oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = DEFAULT_LIMIT_PERCENT    	
 End Sub
 
 private Sub ShowSyncDialog
@@ -64,12 +78,14 @@ private Sub ShowSyncDialog
     oSyncDialog.Title = &quot;FormulaSync&quot;
     oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = FONT_FAMILY
     oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = FONT_SIZE
+    oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text = EXPOSANT_PERCENT
+    oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = LIMIT_PERCENT 
     oSyncDialog.Execute()
 End Sub
 
 REM ######################################## Synchronize all formulas
 
-Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String)
+Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCENT as String, LIMIT_PERCENT as String)
 	REM MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
 
 	REM Size of Exposants/indices and Limts
@@ -167,8 +183,8 @@ Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String)
 				
 					rem oModel.RelativeIndexSubscript=52
 					rem oModel.RelativeIndexSuperscript=10
-					oModel.RelativeFontHeightIndices=EXPOSANT_INDICE_SIZE_PERCENT
-					oModel.RelativeFontHeightLimits=LIMIT_SIZE_PERCENT
+					oModel.RelativeFontHeightIndices=EXPOSANT_PERCENT
+					oModel.RelativeFontHeightLimits=LIMIT_PERCENT
 				
 					&apos; Update
 					oXCOEO = oMathObject.ExtendedControlOverEmbeddedObject
