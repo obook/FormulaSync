@@ -17,10 +17,10 @@
   </dlg:button>
   <dlg:textfield dlg:style-id="0" dlg:id="Notice" dlg:tab-index="8" dlg:left="2" dlg:top="3" dlg:width="170" dlg:height="19" dlg:tabstop="false" dlg:align="center" dlg:valign="center" dlg:readonly="true" dlg:value="This extension is experimental, keep a copy of your documents."/>
   <dlg:text dlg:id="Label3" dlg:tab-index="9" dlg:left="13" dlg:top="66" dlg:width="43" dlg:height="13" dlg:value="Exposant/Indice" dlg:align="right"/>
-  <dlg:text dlg:id="Label4" dlg:tab-index="10" dlg:left="121" dlg:top="62" dlg:width="9" dlg:height="8" dlg:value="%"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="10" dlg:left="121" dlg:top="62" dlg:width="9" dlg:height="12" dlg:value="%" dlg:valign="center"/>
   <dlg:text dlg:id="Label5" dlg:tab-index="11" dlg:left="13" dlg:top="83" dlg:width="43" dlg:height="13" dlg:value="Limit" dlg:align="right"/>
-  <dlg:numericfield dlg:id="IdLimitPercent" dlg:tab-index="3" dlg:left="68" dlg:top="62" dlg:width="50" dlg:height="12" dlg:align="center" dlg:valign="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
-  <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="4" dlg:left="69" dlg:top="79" dlg:width="50" dlg:height="12" dlg:align="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
-  <dlg:text dlg:id="Label6" dlg:tab-index="12" dlg:left="121" dlg:top="82" dlg:width="9" dlg:height="8" dlg:value="%"/>
+  <dlg:numericfield dlg:id="IdLimitPercent" dlg:tab-index="3" dlg:left="68" dlg:top="79" dlg:width="50" dlg:height="12" dlg:align="center" dlg:valign="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="12" dlg:left="121" dlg:top="79" dlg:width="9" dlg:height="12" dlg:value="%" dlg:valign="center"/>
+  <dlg:numericfield dlg:id="IdExpoPercent" dlg:tab-index="4" dlg:left="68" dlg:top="62" dlg:width="50" dlg:height="12" dlg:align="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
  </dlg:bulletinboard>
 </dlg:window>
