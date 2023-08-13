@@ -6,6 +6,8 @@ Download last release : https://github.com/obook/FormulaSync/raw/main/formulasyn
 
 Download LibreOffice : https://www.libreoffice.org/download/
 
+Téléchager LibreOffice en français : https://fr.libreoffice.org/download/telecharger-libreoffice/
+
 <hr>
 
 <p align="center">
