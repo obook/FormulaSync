@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description xmlns="http://openoffice.org/extensions/description/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <identifier value="com.obooklage.formulasync"/>
+    <identifier value="com.obooklage.formulasync" />
     <icon>
         <default xlink:href="icons/icon.svg" />
     </icon>
@@ -19,9 +19,9 @@
     <extension-description>
         <src lang="en" xlink:href="pkg-desc/pkg-description.en"/><!-- Utile ici  ? -->
     </extension-description>
-    <update-download>
-        <src xlink:href="https://github.com/obook/FormulaSync/raw/main/formulasync.oxt" />
-    </update-download>
+    <update-information>
+        <src xlink:href="https://github.com/obook/FormulaSync/raw/main/formulasync.update.xml" />
+    </update-information>
     <update-website>
         <src xlink:href="https://github.com/obook/FormulaSync/" />
     </update-website>
