@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="MainDialog" dlg:left="208" dlg:top="103" dlg:width="174" dlg:height="122" dlg:closeable="true" dlg:moveable="true">
- <dlg:styles>
-  <dlg:style dlg:style-id="0" dlg:border="none"/>
- </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:text dlg:id="Label1" dlg:tab-index="0" dlg:left="20" dlg:top="29" dlg:width="35" dlg:height="13" dlg:value="Font Family" dlg:align="right" dlg:valign="center"/>
-  <dlg:text dlg:id="Label2" dlg:tab-index="7" dlg:left="22" dlg:top="46" dlg:width="34" dlg:height="13" dlg:value="Font Size" dlg:align="right" dlg:valign="center"/>
-  <dlg:textfield dlg:id="IdFontName" dlg:tab-index="2" dlg:left="68" dlg:top="29" dlg:width="50" dlg:height="12" dlg:align="center" dlg:value="CMU Serif"/>
-  <dlg:numericfield dlg:id="IdFontSize" dlg:tab-index="1" dlg:left="68" dlg:top="46" dlg:width="50" dlg:height="12" dlg:page="1" dlg:align="center" dlg:strict-format="true" dlg:decimal-accuracy="0" dlg:value="12" dlg:value-min="6" dlg:value-max="32"/>
-  <dlg:button dlg:id="IdSyncButton" dlg:tab-index="5" dlg:left="46" dlg:top="104" dlg:width="92" dlg:height="12" dlg:default="true" dlg:value="Synchronize all formulas">
+  <dlg:text dlg:id="Label1" dlg:tab-index="0" dlg:left="20" dlg:top="12" dlg:width="35" dlg:height="13" dlg:value="Font Family" dlg:align="right" dlg:valign="center"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="7" dlg:left="22" dlg:top="29" dlg:width="34" dlg:height="13" dlg:value="Font Size" dlg:align="right" dlg:valign="center"/>
+  <dlg:textfield dlg:id="IdFontName" dlg:tab-index="3" dlg:left="68" dlg:top="12" dlg:width="50" dlg:height="12" dlg:align="center" dlg:value="CMU Serif"/>
+  <dlg:numericfield dlg:id="IdFontSize" dlg:tab-index="2" dlg:left="68" dlg:top="29" dlg:width="50" dlg:height="12" dlg:page="1" dlg:align="center" dlg:strict-format="true" dlg:decimal-accuracy="0" dlg:value="12" dlg:value-min="6" dlg:value-max="32"/>
+  <dlg:button dlg:id="IdSyncButton" dlg:tab-index="1" dlg:left="46" dlg:top="104" dlg:width="92" dlg:height="12" dlg:default="true" dlg:value="Synchronize all formulas">
    <script:event script:event-name="on-mouseup" script:macro-name="vnd.sun.star.script:FormulaSync.MainModule.ButtonSyncDialog?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="IdDefaultButton" dlg:tab-index="6" dlg:left="133" dlg:top="54" dlg:width="35" dlg:height="13" dlg:value="Default">
+  <dlg:button dlg:id="IdDefaultButton" dlg:tab-index="6" dlg:left="133" dlg:top="37" dlg:width="35" dlg:height="13" dlg:value="Default">
    <script:event script:event-name="on-mouseup" script:macro-name="vnd.sun.star.script:FormulaSync.MainModule.ButtonFillDefault?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:textfield dlg:style-id="0" dlg:id="Notice" dlg:tab-index="8" dlg:left="2" dlg:top="3" dlg:width="170" dlg:height="19" dlg:tabstop="false" dlg:align="center" dlg:valign="center" dlg:readonly="true" dlg:value="This extension is experimental, keep a copy of your documents."/>
-  <dlg:text dlg:id="Label3" dlg:tab-index="9" dlg:left="13" dlg:top="62" dlg:width="43" dlg:height="13" dlg:value="Exposant/Indice" dlg:align="right" dlg:valign="center"/>
-  <dlg:text dlg:id="Label4" dlg:tab-index="10" dlg:left="121" dlg:top="62" dlg:width="9" dlg:height="12" dlg:value="%" dlg:valign="center"/>
-  <dlg:text dlg:id="Label5" dlg:tab-index="11" dlg:left="13" dlg:top="79" dlg:width="43" dlg:height="13" dlg:value="Limit" dlg:align="right" dlg:valign="center"/>
-  <dlg:numericfield dlg:id="IdLimitPercent" dlg:tab-index="4" dlg:left="68" dlg:top="79" dlg:width="50" dlg:height="12" dlg:align="center" dlg:valign="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
-  <dlg:text dlg:id="Label6" dlg:tab-index="12" dlg:left="121" dlg:top="79" dlg:width="9" dlg:height="12" dlg:value="%" dlg:valign="center"/>
-  <dlg:numericfield dlg:id="IdExpoPercent" dlg:tab-index="3" dlg:left="68" dlg:top="62" dlg:width="50" dlg:height="12" dlg:align="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="8" dlg:left="13" dlg:top="45" dlg:width="43" dlg:height="13" dlg:value="Exposant/Indice" dlg:align="right" dlg:valign="center"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="9" dlg:left="121" dlg:top="45" dlg:width="9" dlg:height="12" dlg:value="%" dlg:valign="center"/>
+  <dlg:text dlg:id="Label5" dlg:tab-index="10" dlg:left="13" dlg:top="62" dlg:width="43" dlg:height="13" dlg:value="Limit" dlg:align="right" dlg:valign="center"/>
+  <dlg:numericfield dlg:id="IdLimitPercent" dlg:tab-index="5" dlg:left="68" dlg:top="62" dlg:width="50" dlg:height="12" dlg:align="center" dlg:valign="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="11" dlg:left="121" dlg:top="62" dlg:width="9" dlg:height="12" dlg:value="%" dlg:valign="center"/>
+  <dlg:numericfield dlg:id="IdExpoPercent" dlg:tab-index="4" dlg:left="68" dlg:top="45" dlg:width="50" dlg:height="12" dlg:align="center" dlg:decimal-accuracy="0" dlg:value="65" dlg:value-min="0" dlg:value-max="100"/>
+  <dlg:linklabel dlg:id="UrlCMUFontDownload" dlg:tab-index="12" dlg:left="137" dlg:top="81" dlg:width="31" dlg:height="13" dlg:value="[Download]" dlg:url="https://www.checkmyworking.com/cm-web-fonts/Computer%20Modern%20Serif.zip" dlg:valign="center"/>
+  <dlg:linklabel dlg:id="UrlCMUFontWebsite" dlg:tab-index="13" dlg:left="9" dlg:top="81" dlg:width="126" dlg:height="13" dlg:value="CMU &quot;Computer Modern Serif&quot; typeface (TTF) " dlg:url="https://www.checkmyworking.com/cm-web-fonts/#serif" dlg:align="right" dlg:valign="center"/>
  </dlg:bulletinboard>
 </dlg:window>
