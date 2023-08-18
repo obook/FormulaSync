@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description xmlns="https://openoffice.org/extensions/update/2006"
-  xmlns:xlink="https://www.w3.org/1999/xlink">
+xmlns:xlink="https://www.w3.org/1999/xlink">
   <identifier value="com.obooklage.formulasync" />
+  <display-name>
+    <name>FormulaSync</name>
+  </display-name>
   <version value="1.6" />
   <update-download>
     <src xlink:href="https://github.com/obook/FormulaSync/raw/main/formulasync.oxt" />
