@@ -20,7 +20,7 @@
         <src lang="en" xlink:href="pkg-desc/pkg-description.en"/><!-- Utile ici  ? -->
     </extension-description>
     <update-information>
-        <src xlink:href="https://github.com/obook/FormulaSync/raw/main/formulasync.update.xml" />
+        <src xlink:href="https://github.com/obook/FormulaSync/raw/main/src/formulasync.update.xml" />
     </update-information>
     <update-website>
         <src xlink:href="https://github.com/obook/FormulaSync/" />
