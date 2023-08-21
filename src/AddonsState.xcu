@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="AddonsState" oor:package="org.openoffice.Office.UI">
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="AddonsState"
+oor:package="org.openoffice.Office.UI">
 	<node oor:name="UIElements">
 		<node oor:name="States">
 			<!-- Used to dock the toolbar in the first toolbar row (by default it's floating) -->
 			<node oor:name="private:resource/toolbar/addon_FormulaSync.OfficeToolBar" oor:op="replace">
-				<prop oor:name="UIName" oor:type="xs:string">
-				    <value>Formula Sync</value> <!-- Toolbar name -->
-				</prop>
-				<prop oor:name="DockPos" oor:type="xs:string">
-					<value>10,0</value>
-				</prop>
-				<prop oor:name="Docked" oor:type="xs:boolean">
-					<value>true</value>
-				</prop>
-				<prop oor:name="DockingArea" oor:type="xs:int">
-					<value>0</value>
-				</prop>
+			    <prop oor:name="UIName" oor:type="xs:string"> <!-- Change le nom de la toolbar -->
+				<value>Formula Sync</value>
+				<value xml:lang="en-US">Formula Sync</value>
+				<value xml:lang="fr-FR">Formula Sync</value>
+			    </prop>
+			    <prop oor:name="ContextSensitive" oor:type="xs:boolean">
+				<value>false</value>
+			    </prop>
+			    <prop oor:name="HideFromToolbarMenu" oor:type="xs:boolean">
+				<value>false</value>
+			    </prop>
+			    <prop oor:name="Docked" oor:type="xs:boolean">
+				<value>true</value>
+			    </prop>
+			    <prop oor:name="Visible" oor:type="xs:boolean">
+				<value>true</value>
+			    </prop>
 			</node>
 		</node>
 	</node>
