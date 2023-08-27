@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	oor:name="Registry" oor:package="com.obooklage.formulasync">
+        <node oor:name="SystemInfo">
+		<prop oor:name="FONT_FAMILY" oor:type="xs:string">
+			<value>CMU Serif</value>
+		</prop>
+		<prop oor:name="FONT_SIZE" oor:type="xs:string">
+			<value>12</value>
+		</prop>
+		<prop oor:name="EXPOSANT_PERCENT" oor:type="xs:string">
+			<value>65</value>
+		</prop>
+		<prop oor:name="LIMIT_PERCENT" oor:type="xs:string">
+			<value>65</value>
+		</prop>
+	</node>
+</oor:component-data>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="MainModule" script:language="StarBasic" script:moduleType="normal">REM  *****  BASIC  *****
-REM (C) obooklage 26072023
-REM Original post from  http://forum.ubuntu.org.cn/viewtopic.php?f=35&amp;t=400116
-REM Install &quot;CMU Serif&quot; fonts in ttf folder of https://www.checkmyworking.com/cm-web-fonts/
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="MainModule" script:language="StarBasic" script:moduleType="normal">&apos;  *****  BASIC  *****
+&apos; (C) obooklage 26072023
+&apos; Original post from  http://forum.ubuntu.org.cn/viewtopic.php?f=35&amp;t=400116
+&apos; Install &quot;CMU Serif&quot; fonts in ttf folder of https://www.checkmyworking.com/cm-web-fonts/
 
 Global DEFAULT_FONT_FAMILY as String
 Global FONT_FAMILY as String
@@ -38,7 +38,7 @@ Sub Main
 
 End Sub
 
-REM ######################################## DialBox
+&apos; ######################################## DialBox
 
 Global oSyncDialog As Object
 
@@ -56,13 +56,29 @@ Dim oRuntimeDialog as Object
     LoadDialog() = oRuntimeDialog
 End Function
 
+private Sub ShowSyncDialog
+    oSyncDialog = LoadDialog(&quot;FormulaSync&quot;, &quot;MainDialog&quot;)
+    oSyncDialog.Title = &quot;FormulaSync&quot;
+    oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = GetOption_FONT_FAMILY()
+    oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = GetOption_FONT_SIZE()
+    oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text = GetOption_EXPOSANT_PERCENT()
+    oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = GetOption_LIMIT_PERCENT()
+    oSyncDialog.Execute()
+End Sub
+
 private Sub ButtonSyncDialog
 	FONT_FAMILY = oSyncDialog.GetControl(&quot;IdFontName&quot;).Text
 	FONT_SIZE = oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text
 	EXPOSANT_PERCENT = oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text
 	LIMIT_PERCENT = oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text
 	oSyncDialog.endexecute
-	REM MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
+	
+	&apos; Save configuration
+	SetOption_FONT_FAMILY(FONT_FAMILY)
+	SetOption_FONT_SIZE(FONT_SIZE)
+	SetOption_EXPOSANT_PERCENT(EXPOSANT_PERCENT)
+	SetOption_LIMIT_PERCENT(LIMIT_PERCENT)
+	
 	Synchronize(FONT_FAMILY, FONT_SIZE, EXPOSANT_PERCENT, LIMIT_PERCENT)
 End Sub
 
@@ -73,32 +89,111 @@ private Sub ButtonFillDefault()
     oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = DEFAULT_LIMIT_PERCENT    	
 End Sub
 
-private Sub ShowSyncDialog
-    oSyncDialog = LoadDialog(&quot;FormulaSync&quot;, &quot;MainDialog&quot;)
-    oSyncDialog.Title = &quot;FormulaSync&quot;
-    oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = FONT_FAMILY
-    oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = FONT_SIZE
-    oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text = EXPOSANT_PERCENT
-    oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = LIMIT_PERCENT 
-    oSyncDialog.Execute()
+&apos; ######################################## Configuration
+&apos; Source :  jeromeC 07 juin 2006 23:28 https://forum.openoffice.org/fr/forum/viewtopic.php?t=1494
+
+Function GetConfigAccess( ByVal cNodePath As String, Optional bWriteAccess, Optional bEnableSync, Optional bLazyWrite ) As Object
+   If IsMissing( bWriteAccess ) Then
+      bWriteAccess = False
+   EndIf
+   If IsMissing( bEnableSync ) Then
+      bEnableSync = True
+   EndIf
+   If IsMissing( bLazyWrite ) Then
+      bLazyWrite = False
+   EndIf
+
+   oConfigProvider = GetProcessServiceManager().createInstanceWithArguments(&quot;com.sun.star.configuration.ConfigurationProvider&quot;, Array( MakePropertyValue( &quot;enableasync&quot;, bEnableSync ) ) )
+   
+   If bWriteAccess Then
+      cServiceName = &quot;com.sun.star.configuration.ConfigurationUpdateAccess&quot;
+   Else
+      cServiceName = &quot;com.sun.star.configuration.ConfigurationAccess&quot;
+   EndIf
+   
+   oConfigAccess = oConfigProvider.createInstanceWithArguments( cServiceName, Array( MakePropertyValue( &quot;nodepath&quot;, cNodePath ), MakePropertyValue( &quot;lazywrite&quot;, bLazyWrite ) ) )
+   
+   GetConfigAccess() = oConfigAccess
+End Function
+
+Function MakePropertyValue( Optional cName As String, Optional uValue ) As com.sun.star.beans.PropertyValue
+   oPropertyValue = createUnoStruct( &quot;com.sun.star.beans.PropertyValue&quot; )
+   If Not IsMissing( cName ) Then
+      oPropertyValue.Name = cName
+   EndIf
+   If Not IsMissing( uValue ) Then
+      oPropertyValue.Value = uValue
+   EndIf
+   MakePropertyValue() = oPropertyValue
+End Function 
+
+Function GetOption_FONT_FAMILY()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_FONT_FAMILY = SYSINFO.FONT_FAMILY
+End Function
+
+Sub SetOption_FONT_FAMILY( Ole as String)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.FONT_FAMILY = Ole
+	SYSINFO.commitChanges()
 End Sub
 
-REM ######################################## Synchronize all formulas
+Function GetOption_FONT_SIZE()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_FONT_SIZE = SYSINFO.FONT_SIZE
+End Function
+
+Sub SetOption_FONT_SIZE( Ole as Integer)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.FONT_SIZE = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+Function GetOption_EXPOSANT_PERCENT()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_EXPOSANT_PERCENT = SYSINFO.EXPOSANT_PERCENT
+End Function
+
+Sub SetOption_EXPOSANT_PERCENT( Ole as Integer)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.EXPOSANT_PERCENT = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+Function GetOption_LIMIT_PERCENT()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_LIMIT_PERCENT = SYSINFO.LIMIT_PERCENT
+End Function
+
+Sub SetOption_LIMIT_PERCENT( Ole as Integer)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.LIMIT_PERCENT = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+&apos; ######################################## Synchronize all formulas
 
 Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCENT as String, LIMIT_PERCENT as String)
-	REM MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
-
-	REM Size of Exposants/indices and Limts
+	&apos; MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
+	&apos; Size of Exposants/indices and Limts
 	EXPOSANT_INDICE_SIZE_PERCENT = 65
 	LIMIT_SIZE_PERCENT = 65
 
-	REM ********************************************************************
+	&apos; ********************************************************************
 
 	FONT_CUSTOM_SERIF = &quot;Cmathscr&quot;
 	FONT_CUSTOM_SERIFSANS = &quot;Cmathcal&quot;
 	FONT_CUSTOM_FIXED = &quot;Courier New&quot;
 
-	REM ********************************************************************
+	&apos; ********************************************************************
 
 	FONT_VARIABLES = FONT_FAMILY
 	FONT_VARIABLES_ITALIC = True
@@ -144,7 +239,7 @@ Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCEN
 					s = Replace(s,c,&quot;&quot;)
 					s = Replace(s,d,&quot;&quot;)
 				
-					REM s = Chr(34) +  Chr(34) + s
+					&apos; s = Chr(34) +  Chr(34) + s
 				
 					s = Replace(s,&quot;[CHAR34]&quot;,&quot;&quot;+Chr(34))
 				
@@ -199,7 +294,7 @@ Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCEN
 	
 End Function
 
-REM from https://wiki.openoffice.org/wiki/Documentation/BASIC_Guide/Strings_%28Runtime_Library%29
+&apos; from https://wiki.openoffice.org/wiki/Documentation/BASIC_Guide/Strings_%28Runtime_Library%29
 
 Function Replace(Source As String, Search As String, NewPart As String)
   Dim Result As String

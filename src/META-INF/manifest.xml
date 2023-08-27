@@ -3,5 +3,7 @@
  <manifest:file-entry manifest:media-type="application/vnd.sun.star.basic-library" manifest:full-path="FormulaSync/" />
  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" manifest:full-path="Addons.xcu" />
  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" manifest:full-path="WriterWindowState.xcu" />
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema" manifest:full-path="AddonRegistry.xcs" />
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" manifest:full-path="AddonRegistry.xcu" />
  <manifest:file-entry manifest:media-type="application/vnd.sun.star.package-bundle-description" manifest:full-path="pkg-desc/pkg-description.en"/>
 </manifest:manifest>
