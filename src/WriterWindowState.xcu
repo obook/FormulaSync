@@ -6,8 +6,8 @@ oor:package="org.openoffice.Office.UI"> <!-- Le nom du fichier et le tag name na
 			<!-- Used to dock the toolbar in the first toolbar row (by default it's floating) -->
 			<node oor:name="private:resource/toolbar/addon_FormulaSync.OfficeToolBar" oor:op="replace">
 			    <prop oor:name="UIName" oor:type="xs:string"> <!-- Change le nom de la toolbar -->
-				<value>Format all formulas</value>
-				<value xml:lang="fr-FR">Formatage des formules</value>
+				<value>Format (Formulas)</value>
+				<value xml:lang="fr-FR">Formatage (Formules)</value>
 			    </prop>
 			    <prop oor:name="ContextSensitive" oor:type="xs:boolean">
 				<value>false</value>
