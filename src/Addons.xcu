@@ -26,7 +26,7 @@
 
       <node oor:name="OfficeToolBar"> <!-- Les réglages sont dans WriterWindowState.xcu , mais elle s'appelle "Add-on 5" !! -->
             <node oor:name="FormulaSync.OfficeToolBar" oor:op="replace">
-                     <node oor:name="FormulaSync.OfficeToolBar.01" oor:op="replace">
+                     <node oor:name="FormulaSync.OfficeToolBar" oor:op="replace">
                               <prop oor:name="Context" oor:type="xs:string">
                                     <value>com.sun.star.text.TextDocument</value>
                               </prop>
