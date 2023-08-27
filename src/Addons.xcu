@@ -24,7 +24,7 @@
 
       <!-- Toolbar -->
 
-      <node oor:name="OfficeToolBar"> <!-- Les réglages sont dans WriterWindowState.xcu , mais elle s'appelle "Add-on 5" !! -->
+      <node oor:name="OfficeToolBar"> <!-- Les réglages sont dans WriterWindowState.xcu  -->
             <node oor:name="FormulaSync.OfficeToolBar" oor:op="replace">
                      <node oor:name="FormulaSync.OfficeToolBar" oor:op="replace">
                               <prop oor:name="Context" oor:type="xs:string">
@@ -45,7 +45,7 @@
             </node>
       </node>
 
-      <!-- Menubar -->
+      <!-- Menubar
 
       <node oor:name="OfficeMenuBar">
             <node oor:name="FormulaSync.OfficeMenuBar" oor:op="replace">
@@ -72,6 +72,8 @@
                      </node>
             </node>
       </node>
+
+       -->
 
    </node>
 </oor:component-data>
