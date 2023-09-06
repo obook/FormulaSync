@@ -17,6 +17,12 @@ Global EXPOSANT_PERCENT as Integer
 Global DEFAULT_LIMIT_PERCENT as Integer
 Global LIMIT_PERCENT as Integer
 
+&apos; Left = 0
+&apos; Center = 1
+&apos; Right = 2
+Global DEFAULT_ALIGN as String
+Global ALIGN as String
+
 Global PGM_INIT as Boolean
 
 Sub Main
@@ -25,18 +31,38 @@ Sub Main
 	DEFAULT_FONT_SIZE = 12
 	DEFAULT_EXPOSANT_PERCENT = 65
 	DEFAULT_LIMIT_PERCENT = 65
+	DEFAULT_ALIGN = &quot;Center&quot;
 
 	iF PGM_INIT &lt;&gt; True Then
 		FONT_FAMILY = DEFAULT_FONT_FAMILY
 		FONT_SIZE = DEFAULT_FONT_SIZE
 		EXPOSANT_PERCENT = DEFAULT_EXPOSANT_PERCENT
 		LIMIT_PERCENT = DEFAULT_LIMIT_PERCENT
+		ALIGN = DEFAULT_ALIGN
 		PGM_INIT = True
 	End If
 
 	ShowSyncDialog
 
 End Sub
+
+
+Function GetAlignInt(ALIGN as String)
+
+
+	if ALIGN = &quot;Left&quot; Then 
+		GetAlignInt = 0
+	End If
+	
+	if ALIGN = &quot;Center&quot; Then
+		GetAlignInt = 1
+	End If
+	
+	if ALIGN = &quot;Right&quot; Then
+		GetAlignInt = 2
+	End If
+		
+End Function
 
 &apos; ######################################## DialBox
 
@@ -59,10 +85,13 @@ End Function
 private Sub ShowSyncDialog
     oSyncDialog = LoadDialog(&quot;FormulaSync&quot;, &quot;MainDialog&quot;)
     oSyncDialog.Title = &quot;FormulaSync&quot;
+    
     oSyncDialog.GetControl(&quot;IdFontName&quot;).Text = GetOption_FONT_FAMILY()
     oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = GetOption_FONT_SIZE()
     oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text = GetOption_EXPOSANT_PERCENT()
     oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = GetOption_LIMIT_PERCENT()
+    oSyncDialog.GetControl(&quot;IdAlign&quot;).Text = GetOption_ALIGN()
+    
     oSyncDialog.Execute()
 End Sub
 
@@ -71,6 +100,8 @@ private Sub ButtonSyncDialog
 	FONT_SIZE = oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text
 	EXPOSANT_PERCENT = oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text
 	LIMIT_PERCENT = oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text
+	ALIGN = oSyncDialog.GetControl(&quot;IdAlign&quot;).Text
+	
 	oSyncDialog.endexecute
 	
 	&apos; Save configuration
@@ -78,8 +109,9 @@ private Sub ButtonSyncDialog
 	SetOption_FONT_SIZE(FONT_SIZE)
 	SetOption_EXPOSANT_PERCENT(EXPOSANT_PERCENT)
 	SetOption_LIMIT_PERCENT(LIMIT_PERCENT)
-	
-	Synchronize(FONT_FAMILY, FONT_SIZE, EXPOSANT_PERCENT, LIMIT_PERCENT)
+	SetOption_ALIGN(ALIGN)
+		
+	Synchronize(FONT_FAMILY, FONT_SIZE, EXPOSANT_PERCENT, LIMIT_PERCENT, ALIGN)
 End Sub
 
 private Sub ButtonFillDefault()
@@ -87,101 +119,13 @@ private Sub ButtonFillDefault()
     oSyncDialog.GetControl(&quot;IdFontSize&quot;).Text = DEFAULT_FONT_SIZE
     oSyncDialog.GetControl(&quot;IdExpoPercent&quot;).Text = DEFAULT_EXPOSANT_PERCENT
     oSyncDialog.GetControl(&quot;IdLimitPercent&quot;).Text = DEFAULT_LIMIT_PERCENT    	
+    oSyncDialog.GetControl(&quot;IdAlign&quot;).Text = DEFAULT_ALIGN
 End Sub
 
-&apos; ######################################## Configuration
-&apos; Source :  jeromeC 07 juin 2006 23:28 https://forum.openoffice.org/fr/forum/viewtopic.php?t=1494
-
-Function GetConfigAccess( ByVal cNodePath As String, Optional bWriteAccess, Optional bEnableSync, Optional bLazyWrite ) As Object
-   If IsMissing( bWriteAccess ) Then
-      bWriteAccess = False
-   EndIf
-   If IsMissing( bEnableSync ) Then
-      bEnableSync = True
-   EndIf
-   If IsMissing( bLazyWrite ) Then
-      bLazyWrite = False
-   EndIf
-
-   oConfigProvider = GetProcessServiceManager().createInstanceWithArguments(&quot;com.sun.star.configuration.ConfigurationProvider&quot;, Array( MakePropertyValue( &quot;enableasync&quot;, bEnableSync ) ) )
-   
-   If bWriteAccess Then
-      cServiceName = &quot;com.sun.star.configuration.ConfigurationUpdateAccess&quot;
-   Else
-      cServiceName = &quot;com.sun.star.configuration.ConfigurationAccess&quot;
-   EndIf
-   
-   oConfigAccess = oConfigProvider.createInstanceWithArguments( cServiceName, Array( MakePropertyValue( &quot;nodepath&quot;, cNodePath ), MakePropertyValue( &quot;lazywrite&quot;, bLazyWrite ) ) )
-   
-   GetConfigAccess() = oConfigAccess
-End Function
-
-Function MakePropertyValue( Optional cName As String, Optional uValue ) As com.sun.star.beans.PropertyValue
-   oPropertyValue = createUnoStruct( &quot;com.sun.star.beans.PropertyValue&quot; )
-   If Not IsMissing( cName ) Then
-      oPropertyValue.Name = cName
-   EndIf
-   If Not IsMissing( uValue ) Then
-      oPropertyValue.Value = uValue
-   EndIf
-   MakePropertyValue() = oPropertyValue
-End Function 
-
-Function GetOption_FONT_FAMILY()
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	GetOption_FONT_FAMILY = SYSINFO.FONT_FAMILY
-End Function
-
-Sub SetOption_FONT_FAMILY( Ole as String)
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	SYSINFO.FONT_FAMILY = Ole
-	SYSINFO.commitChanges()
-End Sub
-
-Function GetOption_FONT_SIZE()
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	GetOption_FONT_SIZE = SYSINFO.FONT_SIZE
-End Function
-
-Sub SetOption_FONT_SIZE( Ole as Integer)
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	SYSINFO.FONT_SIZE = Ole
-	SYSINFO.commitChanges()
-End Sub
-
-Function GetOption_EXPOSANT_PERCENT()
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	GetOption_EXPOSANT_PERCENT = SYSINFO.EXPOSANT_PERCENT
-End Function
-
-Sub SetOption_EXPOSANT_PERCENT( Ole as Integer)
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	SYSINFO.EXPOSANT_PERCENT = Ole
-	SYSINFO.commitChanges()
-End Sub
-
-Function GetOption_LIMIT_PERCENT()
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	GetOption_LIMIT_PERCENT = SYSINFO.LIMIT_PERCENT
-End Function
-
-Sub SetOption_LIMIT_PERCENT( Ole as Integer)
-Dim SYSINFO as Variant
-	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
-	SYSINFO.LIMIT_PERCENT = Ole
-	SYSINFO.commitChanges()
-End Sub
 
 &apos; ######################################## Synchronize all formulas
 
-Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCENT as String, LIMIT_PERCENT as String)
+Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCENT as String, LIMIT_PERCENT as String, ALIGN as String)
 	&apos; MsgBox &quot;Sync Ok Font=&quot;+FONT_FAMILY+&quot; Size=&quot;+FONT_SIZE
 	&apos; Size of Exposants/indices and Limts
 	EXPOSANT_INDICE_SIZE_PERCENT = 65
@@ -276,10 +220,18 @@ Function Synchronize(FONT_FAMILY as String, FONT_SIZE as String, EXPOSANT_PERCEN
 					oModel.FontFixedIsItalic =  FONT_CUSTOM_ITALIC
 					oModel.FontFixedIsBold = FONT_CUSTOM_BOLD
 				
-					rem oModel.RelativeIndexSubscript=52
-					rem oModel.RelativeIndexSuperscript=10
+					&apos; oModel.RelativeIndexSubscript=52
+					&apos; oModel.RelativeIndexSuperscript=10
 					oModel.RelativeFontHeightIndices=EXPOSANT_PERCENT
 					oModel.RelativeFontHeightLimits=LIMIT_PERCENT
+					
+					
+					&apos;oModel.Alignment
+					&apos; Left = 0
+					&apos; Center = 1
+					&apos; Right = 2
+					
+					oModel.Alignment=GetAlignInt(ALIGN)
 				
 					&apos; Update
 					oXCOEO = oMathObject.ExtendedControlOverEmbeddedObject

@@ -5,7 +5,7 @@ xmlns:xlink="https://www.w3.org/1999/xlink">
   <display-name>
     <name>FormulaSync</name>
   </display-name>
-  <version value="1.10" />
+  <version value="1.11" />
   <update-download>
     <src xlink:href="https://github.com/obook/FormulaSync/raw/main/formulasync.oxt" />
   </update-download>

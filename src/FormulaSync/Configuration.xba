@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Configuration" script:language="StarBasic" script:moduleType="normal">REM  *****  BASIC  *****
+
+&apos; ######################################## Configuration
+&apos; Source :  jeromeC 07 juin 2006 23:28 https://forum.openoffice.org/fr/forum/viewtopic.php?t=1494
+
+Function GetConfigAccess( ByVal cNodePath As String, Optional bWriteAccess, Optional bEnableSync, Optional bLazyWrite ) As Object
+   If IsMissing( bWriteAccess ) Then
+      bWriteAccess = False
+   EndIf
+   If IsMissing( bEnableSync ) Then
+      bEnableSync = True
+   EndIf
+   If IsMissing( bLazyWrite ) Then
+      bLazyWrite = False
+   EndIf
+
+   oConfigProvider = GetProcessServiceManager().createInstanceWithArguments(&quot;com.sun.star.configuration.ConfigurationProvider&quot;, Array( MakePropertyValue( &quot;enableasync&quot;, bEnableSync ) ) )
+   
+   If bWriteAccess Then
+      cServiceName = &quot;com.sun.star.configuration.ConfigurationUpdateAccess&quot;
+   Else
+      cServiceName = &quot;com.sun.star.configuration.ConfigurationAccess&quot;
+   EndIf
+   
+   oConfigAccess = oConfigProvider.createInstanceWithArguments( cServiceName, Array( MakePropertyValue( &quot;nodepath&quot;, cNodePath ), MakePropertyValue( &quot;lazywrite&quot;, bLazyWrite ) ) )
+   
+   GetConfigAccess() = oConfigAccess
+End Function
+
+Function MakePropertyValue( Optional cName As String, Optional uValue ) As com.sun.star.beans.PropertyValue
+   oPropertyValue = createUnoStruct( &quot;com.sun.star.beans.PropertyValue&quot; )
+   If Not IsMissing( cName ) Then
+      oPropertyValue.Name = cName
+   EndIf
+   If Not IsMissing( uValue ) Then
+      oPropertyValue.Value = uValue
+   EndIf
+   MakePropertyValue() = oPropertyValue
+End Function 
+
+Function GetOption_FONT_FAMILY()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_FONT_FAMILY = SYSINFO.FONT_FAMILY
+End Function
+
+Sub SetOption_FONT_FAMILY( Ole as String)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.FONT_FAMILY = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+Function GetOption_FONT_SIZE()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_FONT_SIZE = SYSINFO.FONT_SIZE
+End Function
+
+Sub SetOption_FONT_SIZE( Ole as Integer)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.FONT_SIZE = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+Function GetOption_EXPOSANT_PERCENT()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_EXPOSANT_PERCENT = SYSINFO.EXPOSANT_PERCENT
+End Function
+
+Sub SetOption_EXPOSANT_PERCENT( Ole as Integer)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.EXPOSANT_PERCENT = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+Function GetOption_LIMIT_PERCENT()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_LIMIT_PERCENT = SYSINFO.LIMIT_PERCENT
+End Function
+
+Sub SetOption_LIMIT_PERCENT( Ole as Integer)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.LIMIT_PERCENT = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+Function GetOption_ALIGN()
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	GetOption_ALIGN = SYSINFO.ALIGN
+End Function
+
+Sub SetOption_ALIGN( Ole as String)
+Dim SYSINFO as Variant
+	SYSINFO = GetConfigAccess(&quot;/com.obooklage.formulasync.Registry/SystemInfo&quot;, TRUE)
+	SYSINFO.ALIGN = Ole
+	SYSINFO.commitChanges()
+End Sub
+
+
+</script:module>

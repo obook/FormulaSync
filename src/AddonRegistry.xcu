@@ -15,5 +15,8 @@
 		<prop oor:name="LIMIT_PERCENT" oor:type="xs:string">
 			<value>65</value>
 		</prop>
+		<prop oor:name="ALIGN" oor:type="xs:string">
+		<value>1</value> <!-- 0=left, 1=center, 2=right -->
+		</prop>
 	</node>
 </oor:component-data>

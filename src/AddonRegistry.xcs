@@ -6,6 +6,7 @@
 			<prop oor:name="FONT_SIZE" oor:type="xs:string"/>
 			<prop oor:name="EXPOSANT_PERCENT" oor:type="xs:string"/>
 			<prop oor:name="LIMIT_PERCENT" oor:type="xs:string"/>
+			<prop oor:name="ALIGN" oor:type="xs:string"/>
 		</group>
 	</component>
 </oor:component-schema>
